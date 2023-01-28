@@ -16,6 +16,7 @@ import { fetchExperiences } from '@/utils/fetchExperiences'
 import { fetchSkills } from '@/utils/fetchSkills'
 import { fetchProjects } from '@/utils/fetchProjects'
 import { fetchSocials } from '@/utils/fetchSocials'
+import { BsFillArrowUpSquareFill } from 'react-icons/bs'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -50,35 +51,38 @@ export default function Home({pageInfo, experiences, skills, projects, socials}:
 
       {/* About */}
       <section id="about" className='snap-center'>
-        <About/>
+        <About pageInfo={pageInfo} />
       </section>
 
       {/* Experience */}
       <section id="experience" className='snap-center'>
-        <WorkExperience />
+        <WorkExperience experiences={experiences}/>
       </section>
 
       {/* Skills */}
       <section id="skills" className='snap-start'>
-        <Skills />
+        <Skills skills={skills}/>
       </section>
 
       {/* Projects */}
       <section id="projects" className='snap-start'>
-        <Projects />
+        <Projects projects={projects}/>
       </section>
 
       {/* Contact */}
 
 
       {/* Footer */}
-      <Link href='#hero'>
-      <footer className='sticky bottom-5 w-full cursor-pointer'>
+      
+      <footer className='sticky bottom-5 w-full'>
         <div className='flex items-center justify-center'>
-          <img src="/images/kevin.png" alt="" className='w-10 h-10 rounded-full filter grayscale hover:grayscale-0 cursor-pointer'/>
+        <Link href='#hero'>
+          
+          <BsFillArrowUpSquareFill className='w-10 h-10 rounded-full filter grayscale hover:grayscale-0 cursor-pointer'/>
+          </Link>
         </div>
       </footer>
-      </Link>
+    
 
     </div>
   )

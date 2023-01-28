@@ -1,9 +1,13 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { PageInfo } from '@/typings'
+import { urlFor } from '@/sanity';
 
-type Props = {}
+type Props = {
+  pageInfo: PageInfo;
+}
 
-function About({}: Props) {
+function About({pageInfo}: Props) {
   return (
     <motion.div
     initial={{ opacity: 0 }}
@@ -18,16 +22,15 @@ function About({}: Props) {
         transition={{ duration: 1.2 }}
         whileInView={{ x: 0, opacity: 1}}
         viewport={{ once: true }}
-        src='/images/kevin.png'
+        src={urlFor(pageInfo?.profilePic).url()}
         className='-mb-20 md:mb-0 flex-shrink-0 w-56 h-56 object-cover md:w-64 md:h-64 xl:w-[400px] xl:h-[400px]'
         />
 
         <div>
             <h1 className='text-4xl md:text-5xl font-semibold'>Hi, I'm Kevin.</h1>
-            <p className='text-gray-500 mt-4 text-base'>I'm a Computer Science student at Dublin City University. I'm passionate about creating and designing things that make a difference.
-            
-            I love full stack development, building things and solving problems and I'm always looking for new challenges to tackle, especially with others.</p>
-        </div>
+            <p className='text-gray-500 mt-4 text-base'>{pageInfo?.backgroundInformation}
+            </p>
+            </div>
     </motion.div>
   )
 }
