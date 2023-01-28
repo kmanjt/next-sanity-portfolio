@@ -3,20 +3,25 @@ import { motion } from 'framer-motion';
 import { Cursor, useTypewriter } from 'react-simple-typewriter';
 import BackgroundCircles from './BackgroundCircles'; 
 import Link from 'next/link';
+import { PageInfo } from '@/typings';
+import { urlFor } from '@/sanity';
 
-type Props = {}
+type Props = {
+    pageInfo: PageInfo;
+}
 
-function Hero({}: Props) {
+function Hero({pageInfo}: Props) {
     const [text, count] = useTypewriter({
-        words: ["Hi, I'm Kevin.", 'Developer.', 'Designer.', 'Creator.'],
+        words: [`Hi, I'm ${pageInfo?.name}.`, 'Developer.', 'Designer.', 'Creator.'],
         loop: true,
         delaySpeed: 2000,
     });
 
-  return (
+    
+    return (
     <div className='h-screen flex flex-col space-y-8 items-center justify-center text-center overflow-hidden'>
         <BackgroundCircles />
-        <img src='/images/kevin.png' alt='kevin' className='relative rounded-full h-32 w-32 mx-auto object-cover'/>
+        <img src={urlFor(pageInfo?.heroImage).url()} alt='kevin' className='relative rounded-full h-32 w-32 mx-auto object-cover'/>
     <div className='z-20'>
         <h2 className='text-sm uppercase font-semibold text-gray-500 pb-2 tracking-[10px]'>Computer Science Student</h2>
 

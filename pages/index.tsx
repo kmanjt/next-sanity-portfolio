@@ -5,14 +5,31 @@ import styles from '@/styles/Home.module.css'
 import Header from '@/components/Nav'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
-import Experience from '@/components/Experience'
+import WorkExperience from '@/components/WorkExperience'
 import Skills from '@/components/Skills'
 import Projects from '@/components/Projects'
 import Link from 'next/link'
+import { GetStaticProps } from 'next'
+import { PageInfo, Experience, Skill, Project, Social } from '@/typings'
+import { fetchPageInfo } from '@/utils/fetchPageInfo'
+import { fetchExperiences } from '@/utils/fetchExperiences'
+import { fetchSkills } from '@/utils/fetchSkills'
+import { fetchProjects } from '@/utils/fetchProjects'
+import { fetchSocials } from '@/utils/fetchSocials'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+type Props = {
+  pageInfo: PageInfo;
+  experiences: Experience[];
+  skills: Skill[];
+  projects: Project[];
+  socials: Social[];
+}
+
+
+export default function Home({pageInfo, experiences, skills, projects, socials}: Props) {
   return (
     <div className='bg-[#ecf0f3] text-[#1f2937] h-screen snap-y snap-mandatory overflow-scroll z-0 scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#5a87c5]/80
      scroll-smooth'>
@@ -24,11 +41,11 @@ export default function Home() {
       </Head>
 
       {/* Header */}
-      <Header />
+      <Header socials={socials}/>
 
       {/* Hero */}
       <section id="hero" className='snap-center'>
-      <Hero />
+      <Hero pageInfo={pageInfo} />
       </section>
 
       {/* About */}
@@ -38,7 +55,7 @@ export default function Home() {
 
       {/* Experience */}
       <section id="experience" className='snap-center'>
-        <Experience />
+        <WorkExperience />
       </section>
 
       {/* Skills */}
@@ -65,4 +82,25 @@ export default function Home() {
 
     </div>
   )
+}
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const pageInfo = await fetchPageInfo()
+  const experiences = await fetchExperiences()
+  const skills = await fetchSkills()
+  const projects = await fetchProjects()
+  const socials = await fetchSocials()
+
+  return {
+    props: {
+      pageInfo,
+      experiences,
+      skills,
+      projects,
+      socials
+
+    },
+    revalidate: 10
+  }
+
 }
